@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className="text-3xl bg-amber-600">
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
