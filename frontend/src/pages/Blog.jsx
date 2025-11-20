@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { assets, blog_data, comments_data } from "../assets/assets";
+import { assets } from "../assets/assets";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import Loader from "../component/Loader";
-
+import axios from "axios";
+import { marked } from "marked";
 const Blog = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -13,15 +14,47 @@ const Blog = () => {
   const [content, setContent] = useState("");
 
   const fetchBlogData = async () => {
-    const blog = blog_data.find((item) => item._id === id);
-    setData(blog);
+    const res = await axios.get(
+      `http://localhost:1337/api/articles?filters[id][$eq]=${id}&populate=*`
+    );
+    // const blog = res.find((item) => item.id === id);
+    setData(res.data?.data?.[0]);
   };
 
   const fetchComments = async () => {
-    setComments(comments_data);
+    const res = await axios.get(
+      `http://localhost:1337/api/comments?filters[article][id][$eq]=${id}&sort=createdAt:desc`
+    );
+    setComments(res.data?.data || []);
   };
   const addComment = async (e) => {
     e.preventDefault();
+
+    try {
+      const payload = {
+        data: {
+          Name: name,
+          Content: [
+            {
+              type: "paragraph",
+              children: [
+                {
+                  type: "text",
+                  text: content,
+                },
+              ],
+            },
+          ],
+          article: id,
+        },
+      };
+      await axios.post("http://localhost:1337/api/comments", payload);
+      setName("");
+      setContent("");
+      fetchComments();
+    } catch (error) {
+      console.log("Error submitting comment", error);
+    }
   };
 
   const fromNow = (date) => {
@@ -43,7 +76,7 @@ const Blog = () => {
   useEffect(() => {
     fetchBlogData();
     fetchComments();
-  }, []);
+  }, [id]);
   return data ? (
     <div className="relative">
       <img
@@ -64,15 +97,21 @@ const Blog = () => {
         <h1 className="text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800">
           {data.title}
         </h1>
-        <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
+        <h2 className="my-5 max-w-lg truncate mx-auto">{data.description}</h2>
         <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/5 font-medium text-primary">
-          John Doe
+          {data.author?.name || "Unknown Author"}
         </p>
       </div>
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
-        <img src={data.image} alt="blog thumbnail" />
+        <img
+          className="w-full aspect-video object-cover rounded-lg"
+          src={data.cover ? `http://localhost:1337${data.cover.url}` : ""}
+          alt="blog thumbnail"
+        />
         <div
-          dangerouslySetInnerHTML={{ __html: data.description }}
+          dangerouslySetInnerHTML={{
+            __html: marked(data.blocks[0].body || ""),
+          }}
           className="rich-text max-w-3xl mx-auto"
         ></div>
         {/* ----------Comment Section------------- */}
@@ -86,9 +125,11 @@ const Blog = () => {
               >
                 <div className="flex items-center gap-2 mb-2">
                   <img src={assets.user_icon} alt="user icon" className="w-6" />
-                  <p className="font-medium">{item.name}</p>
+                  <p className="font-medium">{item.Name}</p>
                 </div>
-                <p className="text-sm max-w-md ml-8">{item.content}</p>
+                <p className="text-sm max-w-md ml-8">
+                  {item.Content?.[0]?.children?.[0].text}
+                </p>
                 <div className="absolute right-4 bottom-3 flex items-center gap-2 text-xs">
                   {fromNow(item.createdAt)}
                 </div>
