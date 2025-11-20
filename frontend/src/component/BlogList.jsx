@@ -11,11 +11,17 @@ const BlogList = () => {
           <div
             onClick={() => setMenu(item)}
             className={` ${
-              menu === item ? "bg-primary text-white" : ""
-            } text-gray-500 rounded-full px-3 py-1 cursor-pointer`}
+              menu === item ? "text-white" : "text-gray-500"
+            } rounded-full px-3 py-1 cursor-pointer relative`}
             key={item}
           >
             {item}
+            {menu === item && (<motion.div
+             layoutId="underline"
+            transition={{ type: "spring", stiffness: 500, damping: 30}}
+            className={` ${
+              menu === item ? "bg-primary" : ""
+            } absolute inset-0 -z-10 rounded-full`}></motion.div>)}
           </div>
         ))}
       </div>
