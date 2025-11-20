@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { assets, blog_data, comments_data } from "../assets/assets";
 import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
+import Loader from "../component/Loader";
 
 const Blog = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
 
   const fetchBlogData = async () => {
     const blog = blog_data.find((item) => item._id === id);
@@ -15,6 +19,9 @@ const Blog = () => {
 
   const fetchComments = async () => {
     setComments(comments_data);
+  };
+  const addComment = async (e) => {
+    e.preventDefault();
   };
 
   const fromNow = (date) => {
@@ -70,7 +77,7 @@ const Blog = () => {
         ></div>
         {/* ----------Comment Section------------- */}
         <div className="mt-14 mb-10 max-w-3xl mx-auto">
-          <p>Comments ({comments.length})</p>
+          <p className="font-semibold mb-4">Comments ({comments.length})</p>
           <div className="flex flex-col gap-4">
             {comments.map((item, index) => (
               <div
@@ -89,10 +96,57 @@ const Blog = () => {
             ))}
           </div>
         </div>
+        {/* -----------------Add Comment Section------------------ */}
+        <div className="max-w-3xl mx-auto">
+          <p className="font-semibold mb-4">Add your comments</p>
+          <form
+            onSubmit={addComment}
+            className="flex flex-col items-center gap-4 max-w-lg"
+          >
+            <input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder="Name"
+              className="w-full p-2 border border-gray-300 rounded outline-none"
+              required
+            />
+            <textarea
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
+              className="w-full p-2 border border-gray-300 rounded outline-none h-48"
+              placeholder="Add your comments here..."
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="bg-primary text-white rounded p-2 px-8 hover: scale-102 transition-all cursor-pointer"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+
+        {/* ------------------------Share buttons-------------- */}
+        <div className="my-24 max-w-3xl mx-auto">
+          <p className="font-semibold my-4">
+            Share this article on social media
+          </p>
+          <div className="flex">
+            <img src={assets.facebook_icon} width={50} alt="facebook icon" />
+            <img src={assets.twitter_icon} width={50} alt="twitter icon" />
+            <img
+              src={assets.googleplus_icon}
+              width={50}
+              alt="google plus icon"
+            />
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   ) : (
-    <div>Loading...</div>
+    <Loader />
   );
 };
 
