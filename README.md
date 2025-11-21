@@ -1,6 +1,6 @@
 ----
 <div align="center">
-  <img src="<path-to-your-logo>/logo.png" alt="AeroFeed Logo" width="200"/>
+  <img src="./frontend/src/assets/logo.svg" alt="AeroFeed Logo" width="200"/>
 
   # AeroFeed
 
@@ -40,7 +40,9 @@
 AeroFeed is a beautifully designed blogging platform that provides an exceptional reading experience. The frontend is built with React and Tailwind CSS, making it fast, responsive, and easy to customize. Content is seamlessly managed through Strapi, a leading open-source headless CMS, which provides a powerful and intuitive admin panel for content creators.
 
 !AeroFeed Screenshot
-*(A screenshot of your application's home page)*
+![Screenshot](./frontend/src/assets/homephoto.png)
+![Screenshot](./frontend/src/assets/blogphoto.png)
+
 
 ---
 
@@ -48,7 +50,6 @@ AeroFeed is a beautifully designed blogging platform that provides an exceptiona
 
 - **Modern & Clean UI:** Aesthetically pleasing design for an enjoyable reading experience.
 - **Fully Responsive:** Adapts to all screen sizes, from mobile to desktop.
-- **Light/Dark Mode:** Theme switcher for comfortable reading in any lighting condition.
 - **Dynamic Content:** Powered by the Strapi headless CMS for easy content management.
 - **Admin Panel:** A dedicated dashboard for creating, editing, and managing blog posts.
 - **Blog Search:** (Coming Soon) Functionality to search for posts.
@@ -158,7 +159,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ## 📧 Contact
 
-Your Name - @your_twitter - email@example.com
+Sahil Singh - akasahilsingh@gmail.com
 
-Project Link: https://github.com/your_username/your_repository
+Project Link: https://github.com/akasahilsingh/AeroFeed
 
