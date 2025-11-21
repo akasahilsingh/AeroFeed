@@ -3,11 +3,15 @@
 
 * {
     font-family: "Outfit", sans-serif;
+    scroll-behavior: smooth;
 }
 
 @theme {
     --color-primary: #5044E5;
+    --dark-selector: ".dark"
 }
+
+
 
 
 .rich-text { font-size: 15px;  }

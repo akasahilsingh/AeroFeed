@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import BlogCard from "./BlogCard";
 import axios from "axios";
 
-const BlogList = () => {
+const BlogList = ({ search }) => {
   const [menu, setMenu] = useState("All");
   const [blogs, setBlogs] = useState([]);
   const [categories, setCategories] = useState(["All"]);
@@ -25,6 +25,15 @@ const BlogList = () => {
       console.log(error);
     }
   };
+
+  const filteredBlogs = blogs.filter((item) => {
+    const matchsCategory = menu === "All" ? true : item.category?.name === menu;
+    const matchesSearch = item.title
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    item.description.toLowerCase().includes(search.toLowerCase());
+    return matchsCategory && matchesSearch;
+  });
 
   useEffect(() => {
     fetchBlogData();
@@ -55,11 +64,7 @@ const BlogList = () => {
       </div>
       {/* ----------------Blog Cards---------------------- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl-:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40">
-        {blogs
-          .filter((item) =>
-            menu === "All" ? true : item.category?.name === menu
-          )
-          .map((item) => (
+        {filteredBlogs.map((item) => (
             <BlogCard
               key={item.id}
               blog={{
