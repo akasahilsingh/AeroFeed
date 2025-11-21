@@ -8,11 +8,11 @@ const BlogList = ({ search }) => {
   const [menu, setMenu] = useState("All");
   const [blogs, setBlogs] = useState([]);
   const [categories, setCategories] = useState(["All"]);
+  const STRAPI_URL = import.meta.env.VITE_API_URL || "http://localhost:1337";
+
   const fetchBlogData = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:1337/api/articles?populate=*"
-      );
+      const res = await axios.get(`${STRAPI_URL}/api/articles?populate=*`);
       setBlogs(res.data.data);
       const uniqueCategory = ["All"];
       res.data.data.forEach((item) => {
@@ -28,10 +28,9 @@ const BlogList = ({ search }) => {
 
   const filteredBlogs = blogs.filter((item) => {
     const matchsCategory = menu === "All" ? true : item.category?.name === menu;
-    const matchesSearch = item.title
-      .toLowerCase()
-      .includes(search.toLowerCase()) ||
-    item.description.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch =
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase());
     return matchsCategory && matchesSearch;
   });
 
@@ -65,20 +64,20 @@ const BlogList = ({ search }) => {
       {/* ----------------Blog Cards---------------------- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl-:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40">
         {filteredBlogs.map((item) => (
-            <BlogCard
-              key={item.id}
-              blog={{
-                id: item.id,
-                title: item.title,
-                description: item.description,
-                slug: item.slug,
-                createdAt: item.createdAt,
-                updatedAt: item.updatedAt,
-                category: item.category?.name || null,
-                image: "http://localhost:1337" + item.cover.url,
-              }}
-            />
-          ))}
+          <BlogCard
+            key={item.id}
+            blog={{
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              slug: item.slug,
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+              category: item.category?.name || null,
+              image: { STRAPI_URL } + item.cover.url,
+            }}
+          />
+        ))}
       </div>
     </div>
   );

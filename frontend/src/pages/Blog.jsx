@@ -15,15 +15,17 @@ const Blog = () => {
 
   const fetchBlogData = async () => {
     const res = await axios.get(
-      `http://localhost:1337/api/articles?filters[id][$eq]=${id}&populate=*`
+      `${STRAPI_URL}/api/articles?filters[id][$eq]=${id}&populate=*`
     );
     // const blog = res.find((item) => item.id === id);
     setData(res.data?.data?.[0]);
   };
 
+  const STRAPI_URL = import.meta.env.VITE_API_URL || "http://localhost:1337";
+
   const fetchComments = async () => {
     const res = await axios.get(
-      `http://localhost:1337/api/comments?filters[article][id][$eq]=${id}&sort=createdAt:desc`
+      `${STRAPI_URL}/api/comments?filters[article][id][$eq]=${id}&sort=createdAt:desc`
     );
     setComments(res.data?.data || []);
   };
@@ -48,7 +50,7 @@ const Blog = () => {
           article: id,
         },
       };
-      await axios.post("http://localhost:1337/api/comments", payload);
+      await axios.post(`${STRAPI_URL}/api/comments`, payload);
       setName("");
       setContent("");
       fetchComments();
@@ -105,7 +107,7 @@ const Blog = () => {
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <img
           className="w-full aspect-video object-cover rounded-lg"
-          src={data.cover ? `http://localhost:1337${data.cover.url}` : ""}
+          src={data.cover ? `${STRAPI_URL}${data.cover.url}` : ""}
           alt="blog thumbnail"
         />
         <div
