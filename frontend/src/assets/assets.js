@@ -1,13 +1,3 @@
-// import blog_pic_1 from './blog_pic_1.png';
-// import blog_pic_2 from './blog_pic_2.png';
-// import blog_pic_3 from './blog_pic_3.png';
-// import blog_pic_4 from './blog_pic_4.png';
-// import blog_pic_5 from './blog_pic_5.png';
-// import blog_pic_6 from './blog_pic_6.png';
-// import blog_pic_7 from './blog_pic_7.png';
-// import blog_pic_8 from './blog_pic_8.png';
-// import blog_pic_9 from './blog_pic_9.png';
-// import blog_pic_10 from './blog_pic_10.png';
 import facebook_icon from './facebook_icon.svg'
 import googleplus_icon from './googleplus_icon.svg'
 import twitter_icon from './twitter_icon.svg'

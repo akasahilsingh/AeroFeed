@@ -114,7 +114,7 @@ const Blog = () => {
           dangerouslySetInnerHTML={{
             __html: marked(data.blocks[0].body || ""),
           }}
-          className="rich-text max-w-3xl mx-auto"
+          className="rich-text max-w-3xl mx-auto mt-4 sm:mt-12"
         ></div>
         {/* ----------Comment Section------------- */}
         <div className="mt-14 mb-10 max-w-3xl mx-auto">

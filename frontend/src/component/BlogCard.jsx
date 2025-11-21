@@ -11,7 +11,7 @@ const BlogCard = ({ blog }) => {
     >
       <img className="aspect-video" src={image} alt="blog thumbnail" />
       <span className="ml-5 mt-4 px-3 py-1 inline-block bg-primary/20 rounded-full text-primary text-xs">
-        {category}
+        {category ? category : "Uncategorize"}
       </span>
       <div className="py-5">
         <h5 className="ml-5 mb-2 font-medium text-gray-900">{title}</h5>
