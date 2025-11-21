@@ -1,3 +1,4 @@
+----
 <div align="center">
   <img src="<path-to-your-logo>/logo.png" alt="AeroFeed Logo" width="200"/>
 
@@ -122,7 +123,7 @@ After setting up the project:
 
 ---
 
-## � Project Structure
+## 📂 Project Structure
 
 ```
 /
@@ -157,6 +158,6 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ## 📧 Contact
 
-Sahil Singh akasahilsingh@gmail.com
+Sahil Singh - aksahilsingh@gmail.com
 
-Project Link: https://github.com/your_username/your_repository
+Project Link: https://github.com/akasahilsingh/AeroFeed
