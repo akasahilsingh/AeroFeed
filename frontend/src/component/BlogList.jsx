@@ -75,7 +75,7 @@ const BlogList = ({ search }) => {
                 createdAt: item.createdAt,
                 updatedAt: item.updatedAt,
                 category: item.category?.name || null,
-                image: item.cover?.url ? `${STRAPI_URL}${item.cover.url}` : "",
+                image: item.cover?.url ? `${STRAPI_URL}${item.cover.url}` : "https://images.ctfassets.net/hrltx12pl8hq/6ect42Ke5Gik4TNrBvDfjR/e8cc84f2a49aec52d3bc4032221a0cb4/drone-images.jpg?fit=fill&w=1200&h=630",
               }}
             />
           ))
