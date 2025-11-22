@@ -17,7 +17,7 @@ const Blog = () => {
     const res = await axios.get(
       `${STRAPI_URL}/api/articles?filters[id][$eq]=${id}&populate=*`
     );
-    // const blog = res.find((item) => item.id === id);
+    
     setData(res.data?.data?.[0]);
   };
 

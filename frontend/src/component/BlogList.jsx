@@ -63,21 +63,27 @@ const BlogList = ({ search }) => {
       </div>
       {/* ----------------Blog Cards---------------------- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl-:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40">
-        {filteredBlogs.length > 0 ? filteredBlogs.map((item) => (
-          <BlogCard
-            key={item.id}
-            blog={{
-              id: item.id,
-              title: item.title,
-              description: item.description,
-              slug: item.slug,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-              category: item.category?.name || null,
-              image: `${STRAPI_URL}${item.cover.url}`,
-            }}
-          />
-        )) : <p className="col-span-full flex items-center justify-center py-10 text-center text-gray-500 text-lg">No results found… 😴 Try another search?</p>}
+        {filteredBlogs.length > 0 ? (
+          filteredBlogs.map((item) => (
+            <BlogCard
+              key={item.id}
+              blog={{
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                slug: item.slug,
+                createdAt: item.createdAt,
+                updatedAt: item.updatedAt,
+                category: item.category?.name || null,
+                image: `${STRAPI_URL}${item.cover.url}`,
+              }}
+            />
+          ))
+        ) : (
+          <p className="col-span-full flex items-center justify-center py-10 text-center text-gray-500 text-lg">
+            No results found… 😴 Try another search?
+          </p>
+        )}
       </div>
     </div>
   );
