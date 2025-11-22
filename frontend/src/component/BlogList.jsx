@@ -75,7 +75,7 @@ const BlogList = ({ search }) => {
                 createdAt: item.createdAt,
                 updatedAt: item.updatedAt,
                 category: item.category?.name || null,
-                image: `${STRAPI_URL}${item.cover.url}`,
+                image: item.cover?.url ? `${STRAPI_URL}${item.cover.url}` : "",
               }}
             />
           ))
