@@ -107,7 +107,7 @@ const Blog = () => {
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <img
           className="w-full aspect-video object-cover rounded-lg"
-          src={data.cover ? `${STRAPI_URL}${data.cover.url}` : "https://ugc.futurelearn.com/uploads/images/3f/88/3f88dd31-40fd-461b-a76e-0d126b272f08.jpg"}
+          src={data.cover ? `${STRAPI_URL}${data.cover?.url}` : "https://ugc.futurelearn.com/uploads/images/3f/88/3f88dd31-40fd-461b-a76e-0d126b272f08.jpg"}
           alt="blog thumbnail"
         />
         <div

@@ -59,37 +59,6 @@
 // //   };
 // // };
 
-// const path = require("path");
-
-// module.exports = ({ env }) => ({
-//   connection: {
-//     client: env("DATABASE_CLIENT", "sqlite"),
-
-//     connection:
-//       env("DATABASE_CLIENT") === "postgres"
-//         ? {
-//             host: env("DATABASE_HOST"),
-//             port: env.int("DATABASE_PORT"),
-//             database: env("DATABASE_NAME"),
-//             username: env("DATABASE_USERNAME"),
-//             password: env("DATABASE_PASSWORD"),
-//             ssl: env.bool("DATABASE_SSL", false)
-//               ? { rejectUnauthorized: false }
-//               : false,
-//           }
-//         : {
-//             filename: path.join(
-//               __dirname,
-//               "..",
-//               env("DATABASE_FILENAME", ".tmp/data.db")
-//             ),
-//           },
-
-//     useNullAsDefault: env("DATABASE_CLIENT", "sqlite") === "sqlite",
-//   },
-// });
-
-
 const path = require("path");
 
 module.exports = ({ env }) => ({
@@ -99,29 +68,18 @@ module.exports = ({ env }) => ({
     connection:
       env("DATABASE_CLIENT") === "postgres"
         ? {
-            // --- FIX 1: Prioritize the full connection string from Render ---
-            // If DATABASE_URL is set (which it is on Render), the host/port/user below are ignored.
-            // This is the most reliable way to connect.
-            connectionString: env('DATABASE_URL'), 
-            
-            // --- Fallback fields (only used if connectionString is empty/missing) ---
             host: env("DATABASE_HOST"),
             port: env.int("DATABASE_PORT"),
             database: env("DATABASE_NAME"),
             username: env("DATABASE_USERNAME"),
             password: env("DATABASE_PASSWORD"),
-
-            // --- FIX 2: Correct SSL Configuration for Render ---
-            // Render requires a specific format for SSL to work.
             ssl: env.bool("DATABASE_SSL", false)
-              ? { rejectUnauthorized: false } // We set rejectUnauthorized to false here.
+              ? { rejectUnauthorized: false }
               : false,
           }
         : {
-            // --- SQLite (Local Development) ---
             filename: path.join(
               __dirname,
-              "..",
               "..",
               env("DATABASE_FILENAME", ".tmp/data.db")
             ),
@@ -130,3 +88,45 @@ module.exports = ({ env }) => ({
     useNullAsDefault: env("DATABASE_CLIENT", "sqlite") === "sqlite",
   },
 });
+
+
+// const path = require("path");
+
+// module.exports = ({ env }) => ({
+//   connection: {
+//     client: env("DATABASE_CLIENT", "sqlite"),
+
+//     connection:
+//       env("DATABASE_CLIENT") === "postgres"
+//         ? {
+//             // --- FIX 1: Prioritize the full connection string from Render ---
+//             // If DATABASE_URL is set (which it is on Render), the host/port/user below are ignored.
+//             // This is the most reliable way to connect.
+//             connectionString: env('DATABASE_URL'), 
+            
+//             // --- Fallback fields (only used if connectionString is empty/missing) ---
+//             host: env("DATABASE_HOST"),
+//             port: env.int("DATABASE_PORT"),
+//             database: env("DATABASE_NAME"),
+//             username: env("DATABASE_USERNAME"),
+//             password: env("DATABASE_PASSWORD"),
+
+//             // --- FIX 2: Correct SSL Configuration for Render ---
+//             // Render requires a specific format for SSL to work.
+//             ssl: env.bool("DATABASE_SSL", false)
+//               ? { rejectUnauthorized: false } // We set rejectUnauthorized to false here.
+//               : false,
+//           }
+//         : {
+//             // --- SQLite (Local Development) ---
+//             filename: path.join(
+//               __dirname,
+//               "..",
+//               "..",
+//               env("DATABASE_FILENAME", ".tmp/data.db")
+//             ),
+//           },
+
+//     useNullAsDefault: env("DATABASE_CLIENT", "sqlite") === "sqlite",
+//   },
+// });
